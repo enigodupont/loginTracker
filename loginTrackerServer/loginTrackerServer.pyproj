@@ -56,6 +56,7 @@
     <Folder Include="loginTrackerServer\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\templates\app\map.html" />
     <Content Include="app\templates\app\signuppartial.html" />
     <Content Include="app\templates\app\signup.html" />
     <Content Include="requirements.txt" />
