@@ -5,7 +5,13 @@ Definition of views.
 from django.shortcuts import render
 from django.http import HttpRequest
 from django.template import RequestContext
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+
 from datetime import datetime
+
+from app.forms import SignUpForm
 
 def home(request):
     """Renders the home page."""
@@ -31,6 +37,33 @@ def contact(request):
             'year':datetime.now().year,
         }
     )
+
+def signup(request):
+    """Renders the signup page."""
+    assert isinstance(request,HttpRequest)
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            user.save()
+            raw_password = form.cleaned_data.get("id_password")
+            user = authenticate(username=user.username,password=raw_password)
+            login(request,user)
+            return redirect("home")
+    else:
+        form = SignUpForm()
+
+    return render(
+        request,
+        'app/signup.html',
+        {'form': form,
+         'title':"Sign Up",
+         'message': "Sign in page",
+         'year':datetime.now().year,
+         }
+        )
+
 
 def about(request):
     """Renders the about page."""
