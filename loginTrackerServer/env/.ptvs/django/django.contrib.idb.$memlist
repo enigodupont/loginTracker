@@ -1,0 +1,15 @@
+flatpages
+messages
+contenttypes
+sites
+sitemaps
+admin
+staticfiles
+humanize
+auth
+syndication
+admindocs
+redirects
+gis
+sessions
+postgres
