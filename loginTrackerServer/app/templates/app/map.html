@@ -1,0 +1,79 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+{% if not user.is_authenticated %}
+
+    <div class="jumbotron">
+        <h1>Login Tracker</h1>
+        Welcome to the login tracker. 
+        This site was designed to help log the locations of it's users via a check in system.
+        Please login to see your destinations!
+    </div>
+
+{% else %}
+
+    <div class="container"id="map"></div>
+    <div class="container">
+        <table class="table table-border">
+            <thead>
+                <tr>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Date</th>
+                    <th>IP</th>
+                    <td>DELETE (SOON)</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in locations %}
+                <tr>
+                    <td>{{ i.lat }}</td>
+                    <td>{{ i.long }}</td>
+                    <td>{{ i.logDate }}</td>
+                    <td>{{ i.ip }}</td>
+                    <td><button disabled>X</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+          function initMap() {
+            // Create a map object and specify the DOM element for display.
+            var map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat: 0, lng: 0},
+              zoom: 4
+              });
+
+            {% for i in locations %}
+            var marker{{ i.id }} = new google.maps.Marker({
+                    position: {lat: {{ i.lat }}, lng: {{ i.long }}},
+                    map: map,
+                    label: '{{ i.id }}',
+                    title: '{{ i.ip }} - {{ i.logDate }}',
+                });
+
+            var content{{ i.id }} = '<div>' +
+                                    '<h1 class="firstHeading"> {{ i.ip }} </h1>' +
+                                    '<h2> {{ i.logDate }} </h2>' +
+                                    '</div>';
+            var infoWindow{{ i.id }} = new google.maps.InfoWindow({
+                content: content{{ i.id }}
+            });
+
+            marker{{ i.id }}.addListener('click',function(){
+              infoWindow{{ i.id }}.open(map,marker{{ i.id }});
+            });
+
+
+            {% endfor %}
+          }
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi7wttRU5kzt6nNE5iP4TLY4VCtgZ2MiY&callback=initMap" async defer></script>
+
+{% endif %}
+
+{% endblock %}

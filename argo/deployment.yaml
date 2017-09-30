@@ -1,0 +1,112 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logintracker
+  labels:
+    run: logintracker
+spec:
+  # Removing when we get proper HPA and so it doesn't trip up ARGO
+  replicas: 2
+  selector:
+    matchLabels:
+      run: logintracker
+  template:
+    metadata:
+      labels:
+        run: logintracker
+    spec:
+      affinity:
+        # Try to put each pod on a different node in the K8s cluster
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: run
+                    operator: In
+                    values:
+                      - logintracker
+                topologyKey: kubernetes.io/hostname
+      volumes:
+      - name: logintracker-secrets
+        secret:
+          secretName: logintracker-secret-mount
+      containers:
+      - name: logintracker
+        image: enigodupont/logintracker:default_tag_change_me
+        imagePullPolicy: Always 
+        ports:
+        - containerPort: 4242
+        volumeMounts:
+        - mountPath: "/opt/loginTracker/db_secrets.py"
+          subPath: "db_secrets.py"
+          readOnly: true
+          name: logintracker-secrets
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        livenessProbe:
+          httpGet:
+            path: /about
+            port: 4242
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /about
+            port: 4242
+          initialDelaySeconds: 15
+          periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logintracker
+spec:
+  selector:
+    run: logintracker
+  ports:
+    - name: ui-port
+      protocol: TCP
+      port: 4242
+      targetPort: 4242
+  type: ClusterIP
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: logintracker
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`logintracker.eniworks.net`)
+    kind: Rule
+    services:
+    - name: logintracker
+      port: 4242
+      passHostHeader: true
+---
+#apiVersion: autoscaling/v2beta2
+#kind: HorizontalPodAutoscaler
+#metadata:
+#  name: logintracker
+#spec:
+#  scaleTargetRef:
+#    apiVersion: apps/v1
+#    kind: Deployment
+#    name: logintracker
+#  minReplicas: 1
+#  maxReplicas: 2
+#  metrics:
+#  - type: Resource
+#    resource:
+#      name: cpu
+#      target:
+#        type: Utilization
+#        averageUtilization: 80
