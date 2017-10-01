@@ -9,10 +9,13 @@ def get_password(password):
     pass_hash = sha256()
     if not password:
         password = getpass("password: ")
+    """"
 
     pass_hash.update(str.encode(password))
 
     return pass_hash.hexdigest()
+    """
+    return password
 
 def send_requests(username, target, pass_hash):
     if not pass_hash:
@@ -20,6 +23,7 @@ def send_requests(username, target, pass_hash):
 
     try:
         r = requests.post(target, data = {'user': username, 'pass': pass_hash})
+        print(r.text)
     except requests.exceptions.RequestException as err:
         print(err)
         sys.exit(1)
