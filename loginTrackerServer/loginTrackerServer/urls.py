@@ -8,6 +8,7 @@ import django.contrib.auth.views
 
 import app.forms
 import app.views
+import post_locate.views
 
 # Uncomment the next lines to enable the admin:
 # from django.conf.urls import include
@@ -20,6 +21,7 @@ urlpatterns = [
     url(r'^contact$', app.views.contact, name='contact'),
     url(r'^about', app.views.about, name='about'),
     url(r'^signup/$', app.views.signup, name='signup'),
+    url(r'^post_locate/$', post_locate.views.locate),
     url(r'^login/$',
         django.contrib.auth.views.login,
         {
