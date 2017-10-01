@@ -21,6 +21,7 @@
                     <th>Latitude</th>
                     <th>Longitude</th>
                     <th>Date</th>
+                    <th>IP</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +30,7 @@
                     <td>{{ i.lat }}</td>
                     <td>{{ i.long }}</td>
                     <td>{{ i.logDate }}</td>
+                    <td>{{ i.ip }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -44,10 +46,26 @@
               });
 
             {% for i in locations %}
-                var marker = new google.maps.Marker({
+            var marker{{ i.id }} = new google.maps.Marker({
                     position: {lat: {{ i.lat }}, lng: {{ i.long }}},
-                    map: map
+                    map: map,
+                    label: '{{ i.id }}',
+                    title: '{{ i.ip }} - {{ i.logDate }}',
                 });
+
+            var content{{ i.id }} = '<div>' +
+                                    '<h1 class="firstHeading"> {{ i.ip }} </h1>' +
+                                    '<h2> {{ i.logDate }} </h2>' +
+                                    '</div>';
+            var infoWindow{{ i.id }} = new google.maps.InfoWindow({
+                content: content{{ i.id }}
+            });
+
+            marker{{ i.id }}.addListener('click',function(){
+              infoWindow{{ i.id }}.open(map,marker{{ i.id }});
+            });
+
+
             {% endfor %}
           }
 

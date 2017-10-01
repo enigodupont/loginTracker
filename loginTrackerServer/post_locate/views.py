@@ -5,6 +5,7 @@ from app.models import locationData
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 
+from datetime import datetime
 # Create your views here.
 
 @csrf_exempt
@@ -18,7 +19,7 @@ def locate(request):
     local.lat = js['latitude']
     local.long = js['longitude']
     local.ip = client_ip
-
+    local.logDate = datetime.now()
 
     user = authenticate(username=request.POST['user'],password=request.POST['pass'])
     local.user = user
