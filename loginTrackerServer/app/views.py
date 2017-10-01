@@ -12,6 +12,7 @@ from django.shortcuts import render, redirect
 from datetime import datetime
 
 from app.forms import SignUpForm
+from app.models import locationData
 
 def home(request):
     """Renders the home page."""
@@ -22,6 +23,21 @@ def home(request):
         {
             'title':'Home Page',
             'year':datetime.now().year,
+        }
+    )
+
+def map(request):
+    """Renders the map page."""
+    assert isinstance(request, HttpRequest)
+    all_locations = []
+    all_locations = locationData.objects.filter(user_id=request.user.id)
+    return render(
+        request,
+        'app/map.html',
+        {
+            'title':'Location Map',
+            'year':datetime.now().year,
+            'locations': all_locations,
         }
     )
 

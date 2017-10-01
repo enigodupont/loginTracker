@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^$', app.views.home, name='home'),
     url(r'^contact$', app.views.contact, name='contact'),
     url(r'^about', app.views.about, name='about'),
+    url(r'^map', app.views.map, name='map'),
     url(r'^signup/$', app.views.signup, name='signup'),
     url(r'^post_locate/$', post_locate.views.locate),
     url(r'^login/$',
