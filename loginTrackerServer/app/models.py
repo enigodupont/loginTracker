@@ -13,7 +13,7 @@ class locationData(models.Model):
     lat = models.TextField(max_length=500,blank=True)
     long = models.TextField(max_length=500,blank=True)
     logDate = models.DateField(null=True, blank=True)
-    ip = models.TextField(max_length=500,blank=True)
+#    ip = models.TextField(max_length=500,blank=True)
 
 
 class Profile(models.Model):
