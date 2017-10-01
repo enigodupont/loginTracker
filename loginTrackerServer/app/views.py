@@ -63,8 +63,7 @@ def signup(request):
             user = form.save()
             user.refresh_from_db()
             user.save()
-            raw_password = form.cleaned_data.get("id_password")
-            user = authenticate(username=user.username,password=raw_password)
+
             login(request,user)
             return redirect("home")
     else:
