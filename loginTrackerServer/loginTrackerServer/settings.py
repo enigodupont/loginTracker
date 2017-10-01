@@ -27,10 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
 # Application definition
 
 INSTALLED_APPS = [
+    'post_locate',
     'app',
     # Add your apps here to enable them
     'django.contrib.admin',
