@@ -17,6 +17,7 @@ def locate(request):
     local = locationData()
     local.lat = js['latitude']
     local.long = js['longitude']
+    local.ip = client_ip
 
 
     user = authenticate(username=request.POST['user'],password=request.POST['pass'])
@@ -26,13 +27,5 @@ def locate(request):
     
     return render(
         request,
-        'post_locate/locate.html',
-        {
-            'title'       : 'locate',
-            'lat'         : js['latitude'],
-            'long'        : js['longitude'],
-            'city'        : js['city'],
-            'country_name': js['country_name'],
-            'user'        : request.POST['user']
-        }
+        'post_locate/locate.html'
     )
