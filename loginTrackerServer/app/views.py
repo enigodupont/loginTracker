@@ -13,6 +13,8 @@ from datetime import datetime
 
 from app.forms import SignUpForm
 from app.models import locationData
+from django.views.decorators.csrf import csrf_exempt
+import requests
 
 def home(request):
     """Renders the home page."""
@@ -91,4 +93,32 @@ def about(request):
             'message':'Your application description page.',
             'year':datetime.now().year,
         }
+    )
+
+@csrf_exempt
+def locate(request):
+    assert isinstance(request, HttpRequest)
+    client_ip = request.META['REMOTE_ADDR']
+    url="http://freegeoip.net/json/"+client_ip
+    r = requests.get(url)
+    if request.method == "POST":
+        js = r.json()
+        local = locationData()
+        local.lat = js['latitude']
+        local.long = js['longitude']
+        local.ip = client_ip
+        local.logDate = datetime.now()
+
+        user = authenticate(username=request.POST['user'],password=request.POST['pass'])
+        local.user = user
+        local.save()
+
+    if request.method == "GET":
+        pass
+
+    
+    
+    return render(
+        request,
+        'app/locate.html'
     )
