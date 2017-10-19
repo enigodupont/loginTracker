@@ -101,22 +101,31 @@ def locate(request):
     client_ip = request.META['REMOTE_ADDR']
     url="http://freegeoip.net/json/"+client_ip
     r = requests.get(url)
-    if request.method == "POST":
-        js = r.json()
-        local = locationData()
-        local.lat = js['latitude']
-        local.long = js['longitude']
-        local.ip = client_ip
-        local.logDate = datetime.now()
+    js = r.json()
+    local = locationData()
+    local.lat = js['latitude']
+    local.long = js['longitude']
+    local.ip = client_ip
+    local.logDate = datetime.now()
 
-        user = authenticate(username=request.POST['user'],password=request.POST['pass'])
-        local.user = user
-        local.save()
+    if request.method == "POST":
+        try:
+            user = authenticate(username=request.POST['user'],password=request.POST['pass'])
+            local.user = user
+            local.save()
+
+            return render(
+                    request,
+                    'app/client_pass.html'
+                    )
+
+        except:
+            pass
 
     if request.method == "GET":
-        pass
-
-    
+        if request.user.is_authenticated():
+            local.user = request.user
+            local.save()
     
     return render(
         request,
