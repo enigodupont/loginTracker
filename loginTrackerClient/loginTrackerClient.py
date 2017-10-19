@@ -23,7 +23,10 @@ def send_requests(username, target, pass_hash):
 
     try:
         r = requests.post(target, data = {'user': username, 'pass': pass_hash})
-        print(r.text)
+        if "pass" in r.text:
+            print("[*] location logged")
+        else:
+            print("[**] failed to log location")
     except requests.exceptions.RequestException as err:
         print(err)
         sys.exit(1)

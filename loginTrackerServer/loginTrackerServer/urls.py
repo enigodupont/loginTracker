@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^about', app.views.about, name='about'),
     url(r'^map', app.views.map, name='map'),
     url(r'^signup/$', app.views.signup, name='signup'),
-    url(r'^locate/$', app.views.locate),
+    url(r'^locate/$', app.views.locate, name='locate'),
     url(r'^login/$',
         django.contrib.auth.views.login,
         {
