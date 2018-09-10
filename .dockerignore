@@ -1,0 +1,15 @@
+# Custom
+argo
+loginTrackerServer/db_secrets.py
+
+# Common
+README.md
+CHANGELOG.md
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# git
+.git
+.gitattributes
+.gitignore

@@ -89,8 +89,8 @@ def about(request):
         request,
         'app/about.html',
         {
-            'title':'About',
-            'message':'Your application description page.',
+            'title':'About Us',
+            'message':'A Login Tracker.',
             'year':datetime.now().year,
         }
     )
@@ -98,8 +98,13 @@ def about(request):
 @csrf_exempt
 def locate(request):
     assert isinstance(request, HttpRequest)
-    client_ip = request.META['REMOTE_ADDR']
-    url="http://freegeoip.net/json/"+client_ip
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR');
+    if x_forwarded_for:
+        client_ip = x_forwarded_for.split(',')[0]
+    else:
+        client_ip = request.META.get('REMOTE_ADDR')
+    
+    url="http://api.ipstack.com/"+client_ip+"?access_key=3dd7389caccffbde5be84d694bb34616"
     r = requests.get(url)
     js = r.json()
     local = locationData()
@@ -108,26 +113,19 @@ def locate(request):
     local.ip = client_ip
     local.logDate = datetime.now()
 
+    if local.lat == None or local.long == None:
+        local.lat = 0;
+        local.long = 0;
     if request.method == "POST":
         try:
             user = authenticate(username=request.POST['user'],password=request.POST['pass'])
             local.user = user
             local.save()
-
-            return render(
-                    request,
-                    'app/client_pass.html'
-                    )
-
+            return render(request,'app/client_pass.html')
         except:
             pass
-
     if request.method == "GET":
         if request.user.is_authenticated():
             local.user = request.user
             local.save()
-    
-    return render(
-        request,
-        'app/locate.html'
-    )
+    return render(request,'app/locate.html')

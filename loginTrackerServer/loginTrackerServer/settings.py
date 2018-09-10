@@ -75,13 +75,19 @@ WSGI_APPLICATION = 'loginTrackerServer.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+try:
+   from db_secrets import *
+except ImportError:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': "PLEASE CREATE db_secrets.py in root directory",
+            'USER': "PLEASE CREATE db_secrets.py in root directory",
+            'PASSWORD': "PLEASE CREATE db_secrets.py in root directory",
+            'HOST': "PLEASE CREATE db_secrets.py in root directory",
+            'PORT': "PLEASE CREATE db_secrets.py in root directory"
+        }
     }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
