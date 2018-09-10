@@ -98,8 +98,13 @@ def about(request):
 @csrf_exempt
 def locate(request):
     assert isinstance(request, HttpRequest)
-    client_ip = request.META['REMOTE_ADDR']
-    url="http://freegeoip.net/json/"+client_ip
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR');
+    if x_forwarded_for:
+        client_ip = x_forwarded_for.split(',')[0]
+    else:
+        client_ip = request.META.get('REMOTE_ADDR')
+    
+    url="http://api.ipstack.com/"+client_ip+"?access_key=3dd7389caccffbde5be84d694bb34616"
     r = requests.get(url)
     js = r.json()
     local = locationData()
