@@ -1,0 +1,5 @@
+Build-Container:
+  script: 
+    - "git clone https://gitlab.theoldsystem.com/jc6482/theoldsystem-docker.git"
+    - "cd theoldsystem-docker/LoginTracker"
+    - "./build.sh"
