@@ -8,7 +8,7 @@ build_image:
     - "./build.sh"
     - "docker tag logintracker:build jc6482/logintracker:latest"
     - "docker push jc6482/logintracker:latest"
-    - "docker rmi -f logintracker:build jc6482/logintracker:latest | true"
+    - "docker rmi -f logintracker:build jc6482/logintracker:latest || true"
     
 after_script:
   - docker logout
