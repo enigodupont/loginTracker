@@ -4,3 +4,5 @@ Build-Container:
     - "git clone https://gitlab.theoldsystem.com/jc6482/theoldsystem-docker.git"
     - "cd theoldsystem-docker/LoginTracker"
     - "./build.sh"
+variables:
+  GIT_SSL_NO_VERIFY: "true"
