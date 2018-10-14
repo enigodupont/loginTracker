@@ -1,10 +1,13 @@
 before_script:
-  - docker info
+  - docker login -u="$GIT_USER" -p="$GIT_PASS"
   - 'echo "Starting Script"'
 build_image:
   script: 
     - "git clone https://$GIT_USER:$GIT_PASS@gitlab.theoldsystem.com/jc6482/theoldsystem-docker.git"
     - "cd theoldsystem-docker/LoginTracker"
     - "./build.sh"
+    - "docker tag logintracker:build jc6482/logintracker:latest"
+    - "docker push jc6482/logintracker:latest"
+    - "docker rmi -f logintracker:build jc6482/logintracker:latest | true"
 variables:
   GIT_SSL_NO_VERIFY: "true"
