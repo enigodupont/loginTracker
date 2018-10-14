@@ -1,5 +1,7 @@
-Build-Container:
-  image: jc6482/theoldubuntu:latest
+before_script:
+  - docker info
+  - 'echo "Starting Script"'
+build_image:
   script: 
     - "git clone https://$GIT_USER:$GIT_PASS@gitlab.theoldsystem.com/jc6482/theoldsystem-docker.git"
     - "cd theoldsystem-docker/LoginTracker"
