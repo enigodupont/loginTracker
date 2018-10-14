@@ -1,5 +1,5 @@
 Build-Container:
-  image: theoldubuntu:latest
+  image: jc6482/theoldubuntu:latest
   script: 
     - "git clone https://gitlab.theoldsystem.com/jc6482/theoldsystem-docker.git"
     - "cd theoldsystem-docker/LoginTracker"
