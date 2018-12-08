@@ -11,7 +11,7 @@ build_image:
     
 sonar_scan:
   script:
-    - 
-  
+    - /opt/sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=LOGINTRACKER -Dsonar.sources=. -Dsonar.host.url=http://10.64.0.5:9000 -Dsonar.login=$SONAR_TOKEN
+
 variables:
   GIT_SSL_NO_VERIFY: "true"
