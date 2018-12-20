@@ -89,8 +89,8 @@ def about(request):
         request,
         'app/about.html',
         {
-            'title':'About',
-            'message':'Your application description page.',
+            'title':'About Us',
+            'message':'A Login Tracker made by Juan Carlos Ramirez & Marvin Leister.',
             'year':datetime.now().year,
         }
     )
@@ -113,26 +113,19 @@ def locate(request):
     local.ip = client_ip
     local.logDate = datetime.now()
 
+    if local.lat == None or local.long == None:
+        local.lat = 0;
+        local.long = 0;
     if request.method == "POST":
         try:
             user = authenticate(username=request.POST['user'],password=request.POST['pass'])
             local.user = user
             local.save()
-
-            return render(
-                    request,
-                    'app/client_pass.html'
-                    )
-
+            return render(request,'app/client_pass.html')
         except:
             pass
-
     if request.method == "GET":
         if request.user.is_authenticated():
             local.user = request.user
             local.save()
-    
-    return render(
-        request,
-        'app/locate.html'
-    )
+    return render(request,'app/locate.html')
