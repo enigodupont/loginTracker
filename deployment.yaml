@@ -20,7 +20,7 @@ spec:
           secretName: logintracker-secret-mount
       containers:
       - name: logintracker
-        image: jc6482/logintracker:latest
+        image: jc6482/logintracker:latest_DEV
         imagePullPolicy: Always 
         ports:
         - containerPort: 4242

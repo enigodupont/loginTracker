@@ -14,4 +14,3 @@ sonar_scan:
 kube_deploy:
   script:
     - "/usr/bin/kubectl apply -f deployment.yaml"
-
