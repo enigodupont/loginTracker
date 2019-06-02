@@ -2,9 +2,9 @@ build_image:
   script:
     - docker login -u="$GIT_USER" -p="$GIT_PASS" 
     - "docker build -t logintracker:build ."
-    - "docker tag logintracker:build jc6482/logintracker:latest"
-    - "docker push jc6482/logintracker:latest"
-    - "docker rmi -f logintracker:build jc6482/logintracker:latest || true"
+    - "docker tag logintracker:build jc6482/logintracker:latest_DEV"
+    - "docker push jc6482/logintracker:latest_DEV"
+    - "docker rmi -f logintracker:build jc6482/logintracker:latest_DEV || true"
     - docker logout
     
 sonar_scan:
