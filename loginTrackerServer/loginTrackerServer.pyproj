@@ -4,8 +4,7 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <Name>loginTrackerServer</Name>
     <RootNamespace>loginTrackerServer</RootNamespace>
-    <InterpreterId>
-    </InterpreterId>
+    <InterpreterId>Global|PythonCore|3.6</InterpreterId>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -38,6 +37,9 @@
     <Compile Include="app\views.py" />
     <Compile Include="app\__init__.py" />
     <Compile Include="app\migrations\__init__.py" />
+    <Compile Include="db_secrets.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="manage.py" />
     <Compile Include="loginTrackerServer\__init__.py" />
     <Compile Include="loginTrackerServer\settings.py" />
@@ -95,6 +97,9 @@
     <None Include="readme.html">
       <SubType>WebBrowser</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.6" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />
   <!-- Specify pre- and post-build commands in the BeforeBuild and 

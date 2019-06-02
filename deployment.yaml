@@ -14,19 +14,40 @@ spec:
         run: logintracker
         namespace: tos
     spec:
+      volumes:
+      - name: logintracker-secrets
+        secret:
+          secretName: logintracker-secret-mount
       containers:
       - name: logintracker
         image: jc6482/logintracker:latest
         imagePullPolicy: Always 
         ports:
         - containerPort: 4242
+        volumeMounts:
+        - mountPath: "/opt/loginTracker/db_secrets.py"
+          subPath: "db_secrets.py"
+          readOnly: true
+          name: logintracker-secrets
         resources:
           requests:
-            memory: "125Mi"
-            cpu: "250m"
+            memory: "100Mi"
+            cpu: "100m"
           limits:
-            memory: "250Mi"
-            cpu: "500m"
+            memory: "200Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 4242
+          initialDelaySeconds: 15
+          periodSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 4242
+          initialDelaySeconds: 5
+          periodSeconds: 1
 ---
 apiVersion: v1
 kind: Service
