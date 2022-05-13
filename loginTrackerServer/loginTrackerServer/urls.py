@@ -23,22 +23,20 @@ urlpatterns = [
     url(r'^signup/$', app.views.signup, name='signup'),
     url(r'^locate/$', app.views.locate, name='locate'),
     url(r'^login/$',
-        django.contrib.auth.views.login,
-        {
-            'template_name': 'app/login.html',
-            'authentication_form': app.forms.BootstrapAuthenticationForm,
-            'extra_context':
+        django.contrib.auth.views.LoginView.as_view(
+            template_name ='app/login.html',
+            authentication_form = app.forms.BootstrapAuthenticationForm,
+            extra_context =
             {
                 'title': 'Log in',
                 'year': datetime.now().year,
             }
-        },
+        ),
         name='login'),
     url(r'^logout$',
-        django.contrib.auth.views.logout,
-        {
-            'next_page': '/',
-        },
+        django.contrib.auth.views.LogoutView.as_view(
+            next_page = '/',
+        ),
         name='logout'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
