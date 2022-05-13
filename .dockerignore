@@ -2,6 +2,9 @@
 argo
 loginTrackerServer/db_secrets.py
 
+# Python
+.env
+
 # Common
 README.md
 CHANGELOG.md

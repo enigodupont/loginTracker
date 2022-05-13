@@ -103,7 +103,7 @@ def locate(request):
         client_ip = x_forwarded_for.split(',')[0]
     else:
         client_ip = request.META.get('REMOTE_ADDR')
-    
+    # This doesn't work, maybe we can just use the JS?
     url="http://api.ipstack.com/"+client_ip+"?access_key=3dd7389caccffbde5be84d694bb34616"
     r = requests.get(url)
     js = r.json()

@@ -262,3 +262,5 @@ __pycache__/
 
 # Ignore Secrets File
 loginTrackerServer/db_secrets.py
+
+.env
