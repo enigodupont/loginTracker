@@ -1,10 +1,9 @@
 certifi==2021.10.8
 chardet==4.0.0
-Django==3.2.13
+Django==4.0.4
 idna==3.3
 pip==22.1
-# 2.9.3 is the latest but a bug with Django prevents us from upgrading
-psycopg2==2.8.6
+psycopg2==2.9.3
 pytz==2022.1
 requests==2.27.1
 setuptools==62.2.0

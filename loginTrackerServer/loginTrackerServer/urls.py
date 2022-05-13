@@ -3,7 +3,7 @@ Definition of urls for loginTrackerServer.
 """
 
 from datetime import datetime
-from django.conf.urls import url
+from django.urls import include, re_path
 import django.contrib.auth.views
 
 import app.forms
@@ -16,13 +16,13 @@ import app.views
 
 urlpatterns = [
     # Examples:
-    url(r'^$', app.views.home, name='home'),
-    url(r'^contact$', app.views.contact, name='contact'),
-    url(r'^about', app.views.about, name='about'),
-    url(r'^map', app.views.map, name='map'),
-    url(r'^signup/$', app.views.signup, name='signup'),
-    url(r'^locate/$', app.views.locate, name='locate'),
-    url(r'^login/$',
+    re_path(r'^$', app.views.home, name='home'),
+    re_path(r'^contact$', app.views.contact, name='contact'),
+    re_path(r'^about', app.views.about, name='about'),
+    re_path(r'^map', app.views.map, name='map'),
+    re_path(r'^signup/$', app.views.signup, name='signup'),
+    re_path(r'^locate/$', app.views.locate, name='locate'),
+    re_path(r'^login/$',
         django.contrib.auth.views.LoginView.as_view(
             template_name ='app/login.html',
             authentication_form = app.forms.BootstrapAuthenticationForm,
@@ -33,15 +33,15 @@ urlpatterns = [
             }
         ),
         name='login'),
-    url(r'^logout$',
+    re_path(r'^logout$',
         django.contrib.auth.views.LogoutView.as_view(
             next_page = '/',
         ),
         name='logout'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    # re_path(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    # re_path(r'^admin/', include(admin.site.urls)),
 ]
