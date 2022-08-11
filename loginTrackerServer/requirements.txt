@@ -1,6 +1,6 @@
 certifi==2021.10.8
 chardet==4.0.0
-Django==4.0.4
+Django==4.0.7
 idna==3.3
 pip==22.1
 psycopg2==2.9.3
