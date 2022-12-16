@@ -104,12 +104,12 @@ def locate(request):
     else:
         client_ip = request.META.get('REMOTE_ADDR')
     # This doesn't work, maybe we can just use the JS?
-    url="http://api.ipstack.com/"+client_ip+"?access_key=3dd7389caccffbde5be84d694bb34616"
+    url="http://www.geoplugin.net/json.gp?ip="+client_ip
     r = requests.get(url)
     js = r.json()
     local = locationData()
-    local.lat = js['latitude']
-    local.long = js['longitude']
+    local.lat = js['geoplugin_latitude']
+    local.long = js['geoplugin_longitude']
     local.ip = client_ip
     local.logDate = datetime.now()
 
@@ -125,7 +125,7 @@ def locate(request):
         except:
             pass
     if request.method == "GET":
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             local.user = request.user
             local.save()
     return render(request,'app/locate.html')

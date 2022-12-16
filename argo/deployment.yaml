@@ -34,7 +34,7 @@ spec:
           secretName: logintracker-secret-mount
       containers:
       - name: logintracker
-        image: jc6482/logintracker:default_tag_change_me
+        image: enigodupont/logintracker:default_tag_change_me
         imagePullPolicy: Always 
         ports:
         - containerPort: 4242
