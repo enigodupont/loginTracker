@@ -77,20 +77,20 @@ spec:
       targetPort: 4242
   type: ClusterIP
 ---
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: logintracker
-spec:
-  entryPoints:
-    - web
-  routes:
-  - match: Host(`logintracker.eniworks.net`)
-    kind: Rule
-    services:
-    - name: logintracker
-      port: 4242
-      passHostHeader: true
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: logintracker
+# spec:
+#   entryPoints:
+#     - web
+#   routes:
+#   - match: Host(`logintracker.eniworks.net`)
+#     kind: Rule
+#     services:
+#     - name: logintracker
+#       port: 4242
+#       passHostHeader: true
 ---
 #apiVersion: autoscaling/v2beta2
 #kind: HorizontalPodAutoscaler
